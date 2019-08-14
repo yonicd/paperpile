@@ -52,3 +52,30 @@ write_bib <- function(bib, subset=NULL, file = ''){
 #' @rdname pipe
 #' @export
 NULL
+
+#' @export
+#' @importFrom readr read_lines
+find_cite <- function(file) {
+
+  x <- readr::read_lines(file); x1 <- x[grepl('\\cite',x)]
+  ret <- unlist(regmatches(x1,gregexpr('\\cite\\{(.*?)\\}',x1)))
+  ret <- gsub('^cite\\{|\\}$','',ret)
+  ret <- gsub('^\\s+|\\s+$','',ret)
+  sort(unique(strsplit(paste0(ret,collapse = ','),',')[[1]]))
+
+}
+
+#' @export
+#' @importFrom purrr map keep flatten_chr
+map_find_cite <- function(path){
+
+  ret <- purrr::map(list.files(path,pattern = '.tex$',full.names = TRUE),find_cite)
+
+  ret <- purrr::keep(ret,.p = function(x) length(x)>0)
+
+  ret <- unique(purrr::flatten_chr(ret))
+
+  ret <- gsub('^\\s+|\\s+$','',ret)
+
+  sort(ret)
+}
