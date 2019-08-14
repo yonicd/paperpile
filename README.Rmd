@@ -1,0 +1,100 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# paperpile
+
+<!-- badges: start -->
+[![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg)]()
+<!-- badges: end -->
+
+The goal of paperpile is to interact with paperpile from `R`.
+
+## Installation
+
+You can install the package by cloning and installing locally
+
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(paperpile)
+```
+
+## Querying
+
+### Default
+
+```{r}
+query('Holford and Sheiner 1981')
+```
+
+### Exact matches
+
+```{r}
+query('Holford and Sheiner 1981 - Pharmacokinetic and pharmacodynamic modeling in vivo.pdf',
+      operator = '=')
+```
+
+```{r}
+query('Holford and Sheiner 1981',operator = '=')
+```
+
+## Download file to local machine
+
+```{r}
+query('Holford and Sheiner 1981')%>%fetch()
+```
+
+## Interacting with exported bib file from paperpile
+### Read in bib file as list
+
+```{r}
+bib <- paperpile::parse_bib()
+```
+
+### Convert the list to a tibble
+
+```{r}
+bib_tbl <- bib%>%
+  bibble()
+
+bib_tbl
+```
+
+### Filter the tibble using tidyverse packages
+
+```{r}
+keys <- bib_tbl%>%
+  dplyr::filter(grepl('Knebel W',author,ignore.case = TRUE))%>%
+  dplyr::pull(rowid)
+
+keys
+
+```
+
+### Write subset of original bib file as new smaller bib file
+
+```{r,eval=FALSE}
+bib%>%write_bib(keys)
+```
+
+<details><summary>bib output</summary>
+
+```{r,echo=FALSE}
+bib%>%write_bib(keys)
+```
+
+</details>

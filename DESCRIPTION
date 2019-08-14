@@ -1,0 +1,13 @@
+Package: paperpile
+Type: Package
+Title: Utility Functions or paperpile
+Version: 0.1.1
+Description: Query and fetch object from paperpile.
+Depends: R (>= 3.2.0)
+Imports: googledrive, glue, purrr, readr, tibble, magrittr
+Encoding: UTF-8
+LazyData: true
+Authors@R: person(given = "Jonathan", family = "Sidi", role = c("cre","aut"), email = "yonis@metrumrg.com")
+RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
+License: MIT + file LICENSE
