@@ -14,34 +14,47 @@ get_field <- function(x,field = 'title'){
 }
 
 #' @importFrom readr read_lines
-#' @importFrom purrr map2
+#' @importFrom purrr map2 set_names
 #' @export
 parse_bib <- function(path = system.file('mrg.bib',package = 'paperpile')){
 
   x <- readr::read_lines(path)
   x1 <- x[nzchar(x)]
   x2 <- grep('^@',x1)
-  purrr::map2(x2[-length(x2)],x2[-1],.f=function(x,y) x1[x:(y-1)])
+  ret <- purrr::map2(x2[-length(x2)],x2[-1],.f=function(x,y) x1[x:(y-1)])
+
+  purrr::set_names(ret,purrr::map_chr(ret,get_key))
 
 }
 
 #' @importFrom purrr map_chr
-#' @importFrom tibble rowid_to_column
 #' @export
 bibble <- function(bib){
 
-  tibble::tibble(
+  ret <- tibble::tibble(
     key = purrr::map_chr(bib,get_key),
     title = purrr::map_chr(bib,get_field,field = 'title'),
-    author = purrr::map_chr(bib,get_field,field = 'author'))%>%
-    tibble::rowid_to_column()
+    author = purrr::map_chr(bib,get_field,field = 'author'))
+
+  class(ret) <- c(class(ret),'bibble')
+
+  ret
+}
+
+#' @export
+write_bib <- function(keys, file = '', bib = parse_bib(),...){
+
+  cat(unlist(bib[keys]),sep='\n',file = file,...)
 
 }
 
 #' @export
-write_bib <- function(bib, subset=NULL, file = ''){
+#' @importFrom checkmate testClass
+write_bibble <- function(obj, file = '', bib = parse_bib(),...){
 
-  cat(unlist(bib[subset]),sep='\n',file = file)
+  checkmate::testClass(obj,'bibble')
+
+  cat(unlist(bib[obj$key]),sep='\n',file = file,...)
 
 }
 

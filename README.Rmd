@@ -77,24 +77,32 @@ bib_tbl
 ### Filter the tibble using tidyverse packages
 
 ```{r}
-keys <- bib_tbl%>%
-  dplyr::filter(grepl('Knebel W',author,ignore.case = TRUE))%>%
-  dplyr::pull(rowid)
+sub_bib <- bib_tbl%>%
+  dplyr::filter(grepl('Knebel W',author,ignore.case = TRUE))
 
-keys
+sub_bib
 
 ```
 
 ### Write subset of original bib file as new smaller bib file
 
+Give directly cite keys
+
+```{r}
+sub_bib$key[1:5]
+write_bib(sub_bib$key[1:5])
+```
+
+Pipe the bibble object directly
+
 ```{r,eval=FALSE}
-bib%>%write_bib(keys)
+sub_bib%>%write_bibble()
 ```
 
 <details><summary>bib output</summary>
 
 ```{r,echo=FALSE}
-bib%>%write_bib(keys)
+sub_bib%>%write_bibble()
 ```
 
 </details>

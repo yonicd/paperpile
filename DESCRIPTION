@@ -4,7 +4,7 @@ Title: Utility Functions or paperpile
 Version: 0.1.1
 Description: Query and fetch object from paperpile.
 Depends: R (>= 3.2.0)
-Imports: googledrive, glue, purrr, readr, tibble, magrittr
+Imports: googledrive, glue, purrr, readr, tibble, magrittr, checkmate
 Encoding: UTF-8
 LazyData: true
 Authors@R: person(given = "Jonathan", family = "Sidi", role = c("cre","aut"), email = "yonis@metrumrg.com")

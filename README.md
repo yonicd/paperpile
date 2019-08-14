@@ -31,8 +31,8 @@ query('Holford and Sheiner 1981')
 #> # A tibble: 2 x 3
 #>   name                                   id                 drive_resource 
 #> * <chr>                                  <chr>              <list>         
-#> 1 Holford and Sheiner 1981 - Understand… 16hvq4xeiD0VhUhrX… <named list [3…
-#> 2 Holford and Sheiner 1981 - Pharmacoki… 1q-deuKBo52LH_nAz… <named list [3…
+#> 1 Holford and Sheiner 1981 - Pharmacoki… 1q-deuKBo52LH_nAz… <named list [3…
+#> 2 Holford and Sheiner 1981 - Understand… 16hvq4xeiD0VhUhrX… <named list [3…
 ```
 
 ### Exact matches
@@ -57,13 +57,13 @@ query('Holford and Sheiner 1981',operator = '=')
 ``` r
 query('Holford and Sheiner 1981')%>%fetch()
 #> File downloaded:
-#>   * Holford and Sheiner 1981 - Understanding the dose-effect relationship - clinical application of pharmacokinetic-pharmacodynamic models.pdf
-#> Saved locally as:
-#>   * /var/folders/kx/t4h_mm1910sb7vhm_gnfnx2c0000gn/T//RtmprBlxIv/Holford and Sheiner 1981 - Understanding the dose-effect relationship - clinical application of pharmacokinetic-pharmacodynamic models.pdf
-#> File downloaded:
 #>   * Holford and Sheiner 1981 - Pharmacokinetic and pharmacodynamic modeling in vivo.pdf
 #> Saved locally as:
-#>   * /var/folders/kx/t4h_mm1910sb7vhm_gnfnx2c0000gn/T//RtmprBlxIv/Holford and Sheiner 1981 - Pharmacokinetic and pharmacodynamic modeling in vivo.pdf
+#>   * /var/folders/kx/t4h_mm1910sb7vhm_gnfnx2c0000gn/T//Rtmpjeq4nc/Holford and Sheiner 1981 - Pharmacokinetic and pharmacodynamic modeling in vivo.pdf
+#> File downloaded:
+#>   * Holford and Sheiner 1981 - Understanding the dose-effect relationship - clinical application of pharmacokinetic-pharmacodynamic models.pdf
+#> Saved locally as:
+#>   * /var/folders/kx/t4h_mm1910sb7vhm_gnfnx2c0000gn/T//Rtmpjeq4nc/Holford and Sheiner 1981 - Understanding the dose-effect relationship - clinical application of pharmacokinetic-pharmacodynamic models.pdf
 ```
 
 ## Interacting with exported bib file from paperpile
@@ -81,38 +81,116 @@ bib_tbl <- bib%>%
   bibble()
 
 bib_tbl
-#> # A tibble: 6,731 x 4
-#>    rowid key         title                      author                     
-#>    <int> <chr>       <chr>                      <chr>                      
-#>  1     1 Miller2011… The highs and lows of can… Miller Lydia K and Devi La…
-#>  2     2 Howlett200… Cannabinoid receptor sign… Howlett A C                
-#>  3     3 Aggarwal20… Cannabinergic pain medici… Aggarwal Sunil K           
-#>  4     4 Bi2019-yp   {Model-Informed} Drug Dev… Bi Youwei and Liu Jiang an…
-#>  5     5 Gorovits20… Anti-drug Antibody Assay … Gorovits Boris and Wang Yi…
-#>  6     6 Psioda2018… Bayesian design of a surv… Psioda Matthew A and Ibrah…
-#>  7     7 Neuenschwa… Summarizing historical in… Neuenschwander Beat and Ca…
-#>  8     8 Hobbs2012-… Commensurate Priors for I… Hobbs Brian P and Sargent …
-#>  9     9 Psioda2019… Bayesian clinical trial d… Psioda Matthew A and Ibrah…
-#> 10    10 Schmulson2… What Is New in Rome {IV}   Schmulson Max J and Drossm…
+#> # A tibble: 6,731 x 3
+#>    key         title                          author                       
+#>    <chr>       <chr>                          <chr>                        
+#>  1 Miller2011… The highs and lows of cannabi… Miller Lydia K and Devi Laks…
+#>  2 Howlett200… Cannabinoid receptor signaling Howlett A C                  
+#>  3 Aggarwal20… Cannabinergic pain medicine: … Aggarwal Sunil K             
+#>  4 Bi2019-yp   {Model-Informed} Drug Develop… Bi Youwei and Liu Jiang and …
+#>  5 Gorovits20… Anti-drug Antibody Assay Cond… Gorovits Boris and Wang Ying…
+#>  6 Psioda2018… Bayesian design of a survival… Psioda Matthew A and Ibrahim…
+#>  7 Neuenschwa… Summarizing historical inform… Neuenschwander Beat and Capk…
+#>  8 Hobbs2012-… Commensurate Priors for Incor… Hobbs Brian P and Sargent Da…
+#>  9 Psioda2019… Bayesian clinical trial desig… Psioda Matthew A and Ibrahim…
+#> 10 Schmulson2… What Is New in Rome {IV}       Schmulson Max J and Drossman…
 #> # … with 6,721 more rows
 ```
 
 ### Filter the tibble using tidyverse packages
 
 ``` r
-keys <- bib_tbl%>%
-  dplyr::filter(grepl('Knebel W',author,ignore.case = TRUE))%>%
-  dplyr::pull(rowid)
+sub_bib <- bib_tbl%>%
+  dplyr::filter(grepl('Knebel W',author,ignore.case = TRUE))
 
-keys
-#>  [1]  703 2154 3508 3830 3851 3989 4111 4233 4460 4529 5061 5100 5106 5133
-#> [15] 5602 5603 5715 6145 6483
+sub_bib
+#> # A tibble: 19 x 3
+#>    key       title                           author                        
+#>    <chr>     <chr>                           <chr>                         
+#>  1 Barrett2… Anticoagulant pharmacodynamics… Barrett J S and Hainer J W an…
+#>  2 Dvorchik… Population pharmacokinetics of… Dvorchik B and Arbeit R D and…
+#>  3 Knebel20… Population {PK} Modeling of {P… Knebel W                      
+#>  4 Knebel20… Population Pharmacokinetic Ana… Knebel William and Rao Niranj…
+#>  5 Knebel20… Population Pharmacokinetic Mod… Knebel W and Tammara B and Ud…
+#>  6 Knebel20… Population Pharmacokinetic Mod… Knebel W                      
+#>  7 Knebel20… Population Pharmacokinetic and… Knebel William                
+#>  8 Knebel20… Executive Summary of Ceftaroli… Knebel W                      
+#>  9 Knebel20… Executive Summary of Guanfacin… Knebel William                
+#> 10 Knebel20… Population {Pharmacokinetic-Ph… Knebel William and Rao Niranj…
+#> 11 Knebel20… Pediatric {Fosphenytoin/Phenyt… Knebel William                
+#> 12 Bergsma2… Facilitating pharmacometric wo… Bergsma Timothy T and Knebel …
+#> 13 Knebel20… Population pharmacokinetic mod… Knebel William and Palmen Mar…
+#> 14 Knebel20… Population Pharmacokinetics of… Knebel William and Gastonguay…
+#> 15 Knebel20… Pediatric {Fosphenytoin/Phenyt… Knebel William and {Metrum Re…
+#> 16 Knebel20… Summary of Fosphenytoin Simula… Knebel William and {Metrum Re…
+#> 17 Knebel20… Population {Pharmacokinetic/Ph… Knebel William and Ermer Jame…
+#> 18 Knebel20… Modeling and simulation of the… Knebel William and Rogers Jim…
+#> 19 Knebel20… Analysis of Ceftaroline in Lun… Knebel William
 ```
 
 ### Write subset of original bib file as new smaller bib file
 
+Give directly cite keys
+
 ``` r
-bib%>%write_bib(keys)
+sub_bib$key[1:5]
+#> [1] "Barrett2001-lx"  "Dvorchik2004-yi" "Knebel2009-mf"   "Knebel2010-dr"  
+#> [5] "Knebel2010-oq"
+write_bib(sub_bib$key[1:5])
+#> @ARTICLE{Barrett2001-lx,
+#>   title   = "Anticoagulant pharmacodynamics of tinzaparin following 175 iu/kg
+#>              subcutaneous administration to healthy volunteers",
+#>   author  = "Barrett, J S and Hainer, J W and Kornhauser, D M and Gaskill, J L
+#>              and Hua, T A and Sprogel, P and Johansen, K and van Lier, J J and
+#>              Knebel, W and Pieniaszek, H. J., Jr",
+#>   journal = "Thromb. Res.",
+#>   volume  =  101,
+#>   number  =  4,
+#>   pages   = "243--254",
+#>   year    =  2001
+#> }
+#> @ARTICLE{Dvorchik2004-yi,
+#>   title   = "Population pharmacokinetics of daptomycin",
+#>   author  = "Dvorchik, B and Arbeit, R D and Chung, J and Liu, S and Knebel, W
+#>              and Kastrissios, H",
+#>   journal = "Antimicrob. Agents Chemother.",
+#>   volume  =  48,
+#>   number  =  8,
+#>   pages   = "2799--2807",
+#>   year    =  2004
+#> }
+#> @TECHREPORT{Knebel2009-mf,
+#>   title       = "Population {PK} Modeling of {PF-04360365} in Adults with
+#>                  {Mild-to-Moderate} Alzheimer's Disease",
+#>   author      = "Knebel, W",
+#>   institution = "Pfizer, Inc.",
+#>   year        =  2009
+#> }
+#> @ARTICLE{Knebel2010-dr,
+#>   title   = "Population Pharmacokinetic Analysis of Istradefylline in Healthy
+#>              Subjects and in Patients With Parkinson's Disease",
+#>   author  = "Knebel, William and Rao, Niranjan and Uchimura, Tatsuo and Mori,
+#>              Akihisa and Fisher, Jeannine and Gastonguay, Marc R and Chaikin,
+#>              Philip",
+#>   journal = "J. Clin. Pharmacol.",
+#>   month   =  mar,
+#>   year    =  2010
+#> }
+#> @ARTICLE{Knebel2010-oq,
+#>   title   = "Population Pharmacokinetic Modeling of Pantoprazole in Pediatric
+#>              Patients From Birth to 16 Years",
+#>   author  = "Knebel, W and Tammara, B and Udata, C and Comer, G and Gastonguay,
+#>              M R and Meng, X",
+#>   journal = "J. Clin. Pharmacol.",
+#>   month   =  may,
+#>   year    =  2010
+#> }
+```
+
+Pipe the bibble object directly
+
+``` r
+sub_bib%>%write_bibble()
 ```
 
 <details>
