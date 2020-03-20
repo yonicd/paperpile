@@ -4,8 +4,13 @@
 \alias{query}
 \title{Query paperpile google drive}
 \usage{
-query(pattern, field = "name", operator = "contains",
-  type = "application/pdf", ...)
+query(
+  pattern,
+  field = "name",
+  operator = "contains",
+  type = "application/pdf",
+  ...
+)
 }
 \arguments{
 \item{pattern}{text to search for in title or in body of document}
